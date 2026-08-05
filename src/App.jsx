@@ -329,7 +329,7 @@ function App() {
         <section id="mechanism" className="section section-anchor mechanism-section">
           <div className="page-wrap">
             <SectionHeader eyebrow="03 真人秀机制" title="四期任务，把暑期视觉变成持续追更" desc="每一期都由线下挑战制造内容，再由游戏内助力改变比赛条件。" />
-            <div className="challenge-image reveal"><img src="/assets/challenge-arena.png" alt="冰块保卫、水上运粮、泼水攻城与赏金决赛四个挑战区域的冰雪插画" /></div>
+            <div className="challenge-image reveal"><img src={`${import.meta.env.BASE_URL}assets/challenge-arena.webp`} alt="冰块保卫、水上运粮、泼水攻城与赏金决赛四个挑战区域的冰雪插画" /></div>
             <div className="episode-timeline">
               {episodes.map((ep) => (
                 <article className="episode-card reveal" key={ep.no}>
@@ -361,7 +361,7 @@ function App() {
         <section id="conversion" className="section section-anchor conversion-section">
           <div className="page-wrap">
             <SectionHeader eyebrow="05 用户转化闭环" title="从第一眼内容，到第二天继续参与" desc="点击任一步骤，查看它在完整转化链路中的位置。" />
-            <div className="conversion-art reveal"><img src="/assets/conversion-journey.png" alt="由内容触达到游戏进入、连续回流和价值转化的冰雪路径插画" /></div>
+            <div className="conversion-art reveal"><img src={`${import.meta.env.BASE_URL}assets/conversion-journey.webp`} alt="由内容触达到游戏进入、连续回流和价值转化的冰雪路径插画" /></div>
             <div className="funnel-steps reveal" aria-label="用户转化步骤">
               {funnelSteps.map((step, index) => <button key={step} className={activeFunnel === index ? "active" : index < activeFunnel ? "passed" : ""} onClick={() => setActiveFunnel(index)}><span>{String(index + 1).padStart(2, "0")}</span><strong>{step}</strong></button>)}
             </div>
