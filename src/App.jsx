@@ -84,10 +84,10 @@ const cases = [
 ];
 
 const episodes = [
-  { no: "01", title: "冰块保卫战", subtitle: "高温 × 保冰", desc: "在高温环境中运输、遮阳并保护同等重量的冰块，60分钟后按剩余重量排名。", scene: "冰块实时融化，让领先与落后在镜头中持续变化。", gameTask: "完成首次建设、资源采集和武将招募，为所属主播累计有效助力。", effect: "每达成一档助力人数，现场解锁保温箱、遮阳布、冰袋或路线提示。", gains: ["保温箱", "遮阳布", "冰袋", "任务提示"] },
-  { no: "02", title: "水上运粮战", subtitle: "水道 × 运粮", desc: "队员穿越浮桥、滑道、水池和障碍区，把代表粮草的道具运到本方城池。", scene: "粮草可能掉落、路线可能受阻，阵营之间可以拦截并争夺隐藏捷径。", gameTask: "完成资源采集、火炉升级和同盟任务，把游戏经营行为转化为运粮优势。", effect: "助力积分可兑换水上捷径、额外时间、免罚令牌、物资保护与复活机会。", gains: ["水上捷径", "时间加成", "物资保护", "复活机会"] },
-  { no: "03", title: "泼水攻城战", subtitle: "阵营 × 攻防", desc: "三阵营用水枪、水球和海绵装备攻守城池，争夺旗帜与资源令牌。", scene: "进攻、防守、运输和指挥分工明确，冲突与反转适合直播切片。", gameTask: "玩家通过阵营任务持续贡献积分，决定本阵营攻城物资和战术资源。", effect: "积分可兑换高阶水枪、防守盾牌、额外复活、攻城加时和城池保护时间。", gains: ["高阶水枪", "防守盾牌", "额外复活", "保护时间"] },
-  { no: "04", title: "赏金决赛夜", subtitle: "冲刺 × 瓜分", desc: "前三期成绩、游戏内有效助力与决赛直播互动共同决定最终冠军。", scene: "赏金箱、隐藏任务、阵营资源兑换与最后十分钟冲刺制造终局悬念。", gameTask: "玩家完成最后阶段任务、召回好友并参与直播互动，为主播完成最终冲刺。", effect: "游戏内助力占50%，并可触发主播复活、特殊事件与最终赏金增益。", gains: ["赏金箱", "资源兑换", "隐藏任务", "最后冲刺"] },
+  { no: "01", phase: "首战篇", title: "冰块保卫战", subtitle: "高温 × 保冰", desc: "在高温环境中运输、遮阳并保护同等重量的冰块，60分钟后按剩余重量排名。", scene: "冰块实时融化，让领先与落后在镜头中持续变化。", gameTask: "完成首次建设、资源采集和武将招募，为所属主播累计有效助力。", effect: "每达成一档助力人数，现场解锁保温箱、遮阳布、冰袋或路线提示。", gains: ["保温箱", "遮阳布", "冰袋", "任务提示"] },
+  { no: "02", phase: "进阶篇", title: "水上运粮战", subtitle: "水道 × 运粮", desc: "队员穿越浮桥、滑道、水池和障碍区，把代表粮草的道具运到本方城池。", scene: "粮草可能掉落、路线可能受阻，阵营之间可以拦截并争夺隐藏捷径。", gameTask: "完成资源采集、火炉升级和同盟任务，把游戏经营行为转化为运粮优势。", effect: "助力积分可兑换水上捷径、额外时间、免罚令牌、物资保护与复活机会。", gains: ["水上捷径", "时间加成", "物资保护", "复活机会"] },
+  { no: "03", phase: "攻防篇", title: "泼水攻城战", subtitle: "阵营 × 攻防", desc: "三阵营用水枪、水球和海绵装备攻守城池，争夺旗帜与资源令牌。", scene: "进攻、防守、运输和指挥分工明确，冲突与反转适合直播切片。", gameTask: "玩家通过阵营任务持续贡献积分，决定本阵营攻城物资和战术资源。", effect: "积分可兑换高阶水枪、防守盾牌、额外复活、攻城加时和城池保护时间。", gains: ["高阶水枪", "防守盾牌", "额外复活", "保护时间"] },
+  { no: "04", phase: "决赛篇", title: "赏金决赛夜", subtitle: "冲刺 × 瓜分", desc: "前三期成绩、游戏内有效助力与决赛直播互动共同决定最终冠军。", scene: "赏金箱、隐藏任务、阵营资源兑换与最后十分钟冲刺制造终局悬念。", gameTask: "玩家完成最后阶段任务、召回好友并参与直播互动，为主播完成最终冲刺。", effect: "游戏内助力占50%，并可触发主播复活、特殊事件与最终赏金增益。", gains: ["赏金箱", "资源兑换", "隐藏任务", "最后冲刺"] },
 ];
 
 const painPoints = [
@@ -385,11 +385,26 @@ function App() {
           <div className="page-wrap">
             <SectionHeader eyebrow="03 真人秀机制" title="四期任务，让暑期内容持续追更" desc="每一期都由线下挑战制造内容，再由游戏内助力改变比赛条件。" />
             <div className="challenge-image reveal"><img src={`${import.meta.env.BASE_URL}assets/challenge-arena.webp`} alt="冰块保卫、水上运粮、泼水攻城与赏金决赛四个挑战区域的冰雪插画" /></div>
-            <div className="episode-tabs reveal" role="tablist" aria-label="四期真人秀任务">
-              {episodes.map((ep, index) => <button key={ep.no} role="tab" aria-selected={activeEpisode === index} className={activeEpisode === index ? "active" : ""} onClick={() => setActiveEpisode(index)}><span>第{ep.no}期</span><strong>{ep.title}</strong><small>{ep.subtitle}</small></button>)}
+            <div className="episode-timeline reveal" role="tablist" aria-label="四期真人秀任务">
+              {episodes.map((ep, index) => (
+                <button className={activeEpisode === index ? "episode-card active" : "episode-card"} key={ep.no} role="tab" aria-selected={activeEpisode === index} aria-controls="episode-detail" onClick={() => setActiveEpisode(index)}>
+                  <div className="episode-no">第{ep.no}期</div><span className="episode-subtitle">{ep.subtitle}</span><h3>{ep.title}</h3><p>{ep.desc}</p>
+                </button>
+              ))}
             </div>
-            <article className="episode-feature reveal" role="tabpanel" aria-live="polite">
-              <div className="episode-feature-heading"><div><span>EP.{episodes[activeEpisode].no}</span><Badge tone="gold">{episodes[activeEpisode].subtitle}</Badge></div><h3>{episodes[activeEpisode].title}</h3><p>{episodes[activeEpisode].desc}</p></div>
+            <article id="episode-detail" className="episode-feature reveal" role="tabpanel" aria-live="polite">
+              <div className="episode-feature-heading">
+                <div className="episode-feature-id">
+                  <div className="episode-id-label"><Trophy weight="fill" /><span>真人秀任务</span></div>
+                  <div className="episode-id-number"><small>EP.</small><strong>{episodes[activeEpisode].no}</strong></div>
+                  <span className="episode-id-phase">{episodes[activeEpisode].phase}</span>
+                </div>
+                <div className="episode-feature-copy">
+                  <div className="episode-feature-meta"><Badge tone="gold">{episodes[activeEpisode].subtitle}</Badge><span>第{episodes[activeEpisode].no}期 · {episodes[activeEpisode].phase}</span></div>
+                  <h3>{episodes[activeEpisode].title}</h3>
+                  <p>{episodes[activeEpisode].desc}</p>
+                </div>
+              </div>
               <div className="episode-detail-grid">
                 <section><div className="episode-detail-icon"><VideoCamera weight="duotone" /></div><span>现场真人秀看点</span><p>{episodes[activeEpisode].scene}</p></section>
                 <ArrowRight className="episode-flow-arrow" />
@@ -400,13 +415,6 @@ function App() {
               <div className="episode-gains"><span>本期可解锁现场增益</span>{episodes[activeEpisode].gains.map((gain) => <small key={gain}><CheckCircle weight="fill" />{gain}</small>)}</div>
             </article>
             <div className="episode-loop reveal"><span>每期固定内容循环</span><strong>线下任务制造冲突</strong><ArrowRight /><strong>主播直播号召助力</strong><ArrowRight /><strong>玩家进入游戏完成任务</strong><ArrowRight /><strong>助力改变现场结果</strong></div>
-            <div className="episode-timeline" aria-label="四期任务摘要">
-              {episodes.map((ep, index) => (
-                <button className={activeEpisode === index ? "episode-card active" : "episode-card"} key={ep.no} onClick={() => setActiveEpisode(index)}>
-                  <div className="episode-no">第{ep.no}期</div><span className="episode-subtitle">{ep.subtitle}</span><h3>{ep.title}</h3><p>{ep.desc}</p>
-                </button>
-              ))}
-            </div>
             <div className="decision-block reveal">
               <div><Badge>决赛权重 · 项目建议</Badge><h3>游戏内有效助力占比最高</h3><p>让玩家进入游戏成为决定主播胜负的关键，而不是附加环节。</p><div className="decision-legend">{decisionData.map((d) => <span key={d.name}><i style={{ backgroundColor: d.color }} />{d.name} {d.value}%</span>)}</div></div>
               <div className="chart-box" ref={decisionChart.chartRef} aria-label="决赛权重环形图">{decisionChart.chartVisible && <ResponsiveContainer width="100%" height={260} key={decisionChart.chartRun}><PieChart><Pie data={decisionData} dataKey="value" nameKey="name" innerRadius={62} outerRadius={96} paddingAngle={3} isAnimationActive={!decisionChart.reducedMotion} animationDuration={850} animationEasing="ease-out">{decisionData.map((d) => <Cell key={d.name} fill={d.color} />)}</Pie><Tooltip formatter={(value, name) => [`${value}%`, name]} /></PieChart></ResponsiveContainer>}<div className="chart-center"><strong>决赛权重</strong><span>三项构成</span></div></div>

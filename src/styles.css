@@ -155,20 +155,20 @@ button:focus-visible, a:focus-visible { outline: 3px solid #ffb83e; outline-offs
 .mechanism-section { background: #edf8ff; }
 .challenge-image { margin-top: 42px; height: 390px; border-radius: 26px; overflow: hidden; border: 8px solid white; box-shadow: var(--shadow); background: white; }
 .challenge-image img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.episode-tabs { margin-top: 30px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 10px; }
-.episode-tabs button { min-height: 94px; padding: 16px 18px; display: grid; grid-template-columns: auto 1fr; grid-template-rows: auto auto; gap: 5px 10px; align-content: center; text-align: left; color: var(--blue-900); background: rgba(255,255,255,.78); border: 1px solid var(--border); border-radius: 17px; cursor: pointer; transition: transform .18s ease, color .18s ease, background-color .18s ease; }
-.episode-tabs button:hover { transform: translateY(-2px); }
-.episode-tabs button.active { color: white; background: var(--blue-700); border-color: var(--blue-700); box-shadow: 0 12px 26px rgba(39,104,216,.2); }
-.episode-tabs span { grid-row: 1 / 3; align-self: center; color: var(--blue-500); font-size: 12px; font-weight: 950; writing-mode: vertical-rl; }
-.episode-tabs button.active span, .episode-tabs button.active small { color: #d8edff; }
-.episode-tabs strong { font-size: 17px; }
-.episode-tabs small { color: var(--ink-soft); font-weight: 750; }
 .episode-feature { margin-top: 14px; padding: 36px; overflow: hidden; background: white; border: 1px solid var(--border); border-radius: 26px; box-shadow: var(--shadow); }
-.episode-feature-heading { display: grid; grid-template-columns: 230px 1fr; gap: 5px 24px; align-items: center; }
-.episode-feature-heading > div { grid-row: 1 / 3; align-self: stretch; padding: 20px; display: flex; flex-direction: column; align-items: flex-start; justify-content: space-between; color: white; background: var(--blue-900); border-radius: 18px; }
-.episode-feature-heading > div > span { font-size: 38px; line-height: 1; font-weight: 950; color: #79c7ff; }
-.episode-feature-heading h3 { margin: 0; font-size: 34px; }
-.episode-feature-heading > p { margin: 0; color: var(--ink-soft); line-height: 1.75; }
+.episode-feature-heading { display: grid; grid-template-columns: 230px 1fr; gap: 24px; align-items: stretch; padding: 18px; background: #f3f9ff; border: 1px solid var(--border); border-radius: 22px; }
+.episode-feature-id { min-height: 172px; padding: 20px; display: flex; flex-direction: column; justify-content: space-between; color: white; background: var(--blue-900); border: 1px solid #244a8a; border-radius: 18px; box-shadow: 0 14px 28px rgba(25, 66, 126, .18); }
+.episode-id-label { display: flex; align-items: center; gap: 8px; color: #d8edff; font-size: 12px; font-weight: 900; letter-spacing: .08em; }
+.episode-id-label svg { width: 20px; height: 20px; color: #ffd46d; }
+.episode-id-number { display: flex; align-items: flex-end; gap: 6px; line-height: .82; }
+.episode-id-number small { padding-bottom: 5px; color: #8dd2ff; font-size: 23px; font-weight: 950; }
+.episode-id-number strong { color: white; font-size: 72px; font-weight: 950; letter-spacing: -.07em; }
+.episode-id-phase { align-self: flex-start; padding: 7px 10px; color: #785000; background: var(--gold-soft); border-radius: 9px; font-size: 12px; font-weight: 950; }
+.episode-feature-copy { align-self: center; padding: 10px 10px 10px 0; }
+.episode-feature-meta { display: flex; align-items: center; gap: 12px; }
+.episode-feature-meta > span { color: var(--blue-700); font-size: 12px; font-weight: 900; }
+.episode-feature-copy h3 { margin: 17px 0 8px; color: var(--blue-950); font-size: 36px; line-height: 1.15; letter-spacing: -.03em; }
+.episode-feature-copy p { max-width: 760px; margin: 0; color: var(--ink-soft); line-height: 1.8; }
 .episode-detail-grid { margin-top: 28px; display: grid; grid-template-columns: 1fr 34px 1fr 34px 1fr; gap: 10px; align-items: stretch; }
 .episode-detail-grid section { min-height: 205px; padding: 24px; background: #f4faff; border: 1px solid var(--border); border-radius: 19px; }
 .episode-detail-grid section.episode-effect { background: #fff8e7; border-color: #f7d995; }
@@ -184,7 +184,7 @@ button:focus-visible, a:focus-visible { outline: 3px solid #ffb83e; outline-offs
 .episode-loop span { padding: 7px 10px; color: white; background: var(--blue-700); border-radius: 8px; font-size: 11px; font-weight: 900; white-space: nowrap; }
 .episode-loop strong { font-size: 13px; text-align: center; }
 .episode-loop svg { flex: 0 0 auto; color: var(--blue-500); }
-.episode-timeline { margin-top: 18px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+.episode-timeline { margin-top: 30px; display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
 .episode-card { padding: 20px; text-align: left; color: var(--blue-950); border-radius: 18px; background: rgba(255,255,255,.72); border: 1px solid var(--border); cursor: pointer; transition: transform .18s ease, border-color .18s ease, background-color .18s ease; }
 .episode-card:hover { transform: translateY(-2px); }
 .episode-card.active { background: white; border-color: var(--blue-500); box-shadow: 0 10px 22px rgba(38,92,150,.1); }
@@ -427,9 +427,8 @@ footer { padding: 38px 0; background: #123664; color: #bcd6ed; }
   .core-grid { padding: 30px 24px; }
   .motivation-row { grid-template-columns: 1fr; }
   .challenge-image { height: 300px; }
-  .episode-tabs { grid-template-columns: repeat(2, 1fr); }
   .episode-feature { padding: 26px 22px; }
-  .episode-feature-heading { grid-template-columns: 150px 1fr; }
+  .episode-feature-heading { grid-template-columns: 185px 1fr; }
   .episode-detail-grid { grid-template-columns: 1fr; }
   .episode-flow-arrow { justify-self: center; transform: rotate(90deg); }
   .episode-detail-grid section { min-height: 0; }
@@ -488,10 +487,12 @@ footer { padding: 38px 0; background: #123664; color: #bcd6ed; }
   .versus > b { height: 34px; }
   .episode-timeline { grid-template-columns: 1fr; }
   .challenge-image { height: 240px; }
-  .episode-tabs { grid-template-columns: 1fr; }
   .episode-feature-heading { grid-template-columns: 1fr; }
-  .episode-feature-heading > div { grid-row: auto; min-height: 110px; }
-  .episode-feature-heading h3 { margin-top: 18px; font-size: 29px; }
+  .episode-feature-id { min-height: 154px; }
+  .episode-id-number strong { font-size: 62px; }
+  .episode-feature-copy { padding: 4px 2px 2px; }
+  .episode-feature-meta { align-items: flex-start; flex-direction: column; gap: 8px; }
+  .episode-feature-copy h3 { margin-top: 16px; font-size: 30px; }
   .episode-gains { align-items: flex-start; flex-direction: column; }
   .solution-problem { grid-template-columns: 36px 36px 1fr; padding: 20px 16px; gap: 10px; }
   .solution-no { font-size: 23px; }

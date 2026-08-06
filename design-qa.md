@@ -81,6 +81,123 @@ final result: passed
 
 ---
 
+## Iteration 11 — 四期卡片去重与 EP 标题区强化
+
+### Evidence
+
+- Source visual truth: `/workspace/scratch/da26ccb1977f/upload/5fd4229e-f3ae-4adb-9e4a-cdd965e3409e.png`.
+- Browser-rendered desktop comparison: `cloud-browser://active-tab/mechanism-ep04-desktop-final`.
+- Browser-rendered mobile comparison: `cloud-browser://active-tab/mechanism-ep04-mobile-final`.
+- Desktop viewport: 1363 × 936 CSS px, density 1; focused implementation capture: 1256 × 860 px.
+- Mobile QA frame: 390 × 844 CSS px with a 375 px document client width, density 1.
+- State: activity-mechanism section with episode 04 selected.
+
+### Full-view and focused-region comparison evidence
+
+The user reference and final desktop implementation were opened together in one comparison input. The reference showed two separate four-card rows containing the same episode information. The final implementation retains one detailed four-card selector above the active episode panel and removes both the compact duplicate selector and the repeated summary row below the panel.
+
+The active episode header was reviewed as a focused region. The former plain `EP.04` block has been replaced by a structured show identity containing a trophy icon, task label, large episode number, episode phase, challenge theme, title and description. The treatment uses the established ice-blue, deep-blue and restrained gold tokens without introducing a new visual system.
+
+### Findings and comparison history
+
+#### Pass 1 — passed
+
+- No actionable P0, P1 or P2 mismatch remains.
+- Exactly one episode selector row remains; it contains four detailed cards and one selected state.
+- The old compact `.episode-tabs` selector is absent.
+- Episode 02 and episode 04 selection both update the complete detail panel correctly.
+- The active episode heading is materially richer without crowding the three-part mechanism flow.
+
+### Required fidelity surfaces
+
+- Fonts and typography: passed. Episode cards preserve the established hierarchy; the new number lockup uses a compact `EP.` label, 72px episode number and readable Chinese labels without truncation.
+- Spacing and layout rhythm: passed. The detailed cards now sit 30px below the challenge image and 14px above the active detail panel. The new header uses a 230px identity column and flexible copy column; mobile collapses to one column.
+- Colors and visual tokens: passed. Existing deep blue, ice blue, white and gold tokens are reused. Contrast remains sufficient in both desktop and mobile states.
+- Image quality and asset fidelity: passed. No new raster asset was needed; the trophy and functional symbols use the existing Phosphor icon family.
+- Copy and content: passed. The complete four episode descriptions are retained once, and each active episode adds a clear phase label without changing the underlying mechanism copy.
+- Accessibility and behavior: passed. The four controls use `role="tab"`, `aria-selected` and `aria-controls`; only one tab is selected at a time.
+- Responsiveness: passed. Desktop and 390px mobile QA show no page-level horizontal overflow (`scrollWidth` equals `clientWidth`).
+
+### Browser verification
+
+- Four-card selector count: passed (4).
+- Duplicate selector rows: passed (1 total).
+- Legacy compact selector count: passed (0).
+- Episode 02 → episode 04 interaction: passed.
+- Three detail cards preserved: passed.
+- Desktop overflow: none (1348 = 1348).
+- Mobile overflow: none (375 = 375).
+- Console: no application-origin warnings or errors; reported errors originate only from the cloud-browser extension metadata script.
+
+### Follow-up polish
+
+- No P3 follow-up is required for the requested scope.
+
+final result: passed
+
+---
+
+## Iteration 10 — 五个转化断点与四期真人秀强化
+
+### Evidence
+
+- Source visual truth: pre-change public proposal at `https://duyifan404-wq.github.io/ice-bounty-camp/`, grounded in `/workspace/scratch/da26ccb1977f/generated_images/exec-fe56317f-7985-4e06-af26-7b15667a1388.png`.
+- Browser-rendered conversion screenshot: `/tmp/ice-proposal-conversion-v11.png`.
+- Conversion before/after comparison: `/tmp/ice-proposal-conversion-comparison.png`.
+- Browser-rendered mechanism screenshot: `/tmp/ice-proposal-mechanism-v11.png`.
+- Mechanism before/after comparison: `/tmp/ice-proposal-mechanism-comparison.png`.
+- Source and implementation captures: 1348 × 926 px; CSS viewport 1363 × 936; device density 1.
+- States: conversion section focused on the problem/solution map; mechanism section with episode 03 selected.
+
+### Full-view and focused-region comparison evidence
+
+Two normalized side-by-side comparisons were reviewed. The conversion comparison shows that the former three small breakpoint cards are replaced by five paired problem/solution rows. The new hierarchy makes the problem, cause, action and expected effect readable in one scan while preserving the proposal's light ice-blue canvas, dark-blue headings and warm reward accents.
+
+The mechanism comparison shows that the former four static summary cards are retained as a compact index, while a new active episode panel explains the offline show moment, the player's in-game task and the resulting live advantage. Episode 03 selection updates the complete detail panel and remains visually consistent with the site's existing card and tab patterns.
+
+### Findings and comparison history
+
+#### Pass 1 — P2 fixed
+
+- The first implementation title “四期任务，把暑期视觉变成持续追更” left the final Chinese character on a separate line at the verified desktop viewport.
+- Fix: shortened it to “四期任务，让暑期内容持续追更”.
+- Post-fix browser verification found one complete heading with no orphaned character.
+
+#### Pass 2 — passed
+
+- No actionable P0, P1 or P2 mismatch remains.
+- All five user problems and all five solutions are present and paired one-to-one.
+- All four episode tabs render; selecting episode 03 updates its heading, three-part task logic and four live gains.
+- The primary navigation remains sticky and correctly activates the selected section.
+
+### Required fidelity surfaces
+
+- Fonts and typography: passed. Existing Chinese sans-serif stack and dark-blue hierarchy are retained; problem headings, solution copy and episode labels remain readable without truncation at the verified desktop viewport.
+- Spacing and layout rhythm: passed. The solution map uses a stable problem / arrow / action grid. The episode feature keeps a consistent heading, three-step mechanism row, gain row and compact episode index.
+- Colors and visual tokens: passed. Pale ice-blue backgrounds, white cards, cobalt actions, coral problem cues and restrained gold results follow the established proposal palette.
+- Image quality and asset fidelity: passed. Existing generated ice-city illustrations remain sharp and correctly cropped; all functional symbols use the established Phosphor icon library.
+- Copy and content: passed. The five previously identified drop-off problems now include explicit search-path and return-motivation solutions. Each reality-show episode now states the field task, in-game action and live effect.
+- Accessibility and interaction: passed. Episode controls use tab semantics and selected states; detail information is text-backed rather than color-only. Focus styles remain inherited from the global accessible control treatment.
+
+### Browser verification
+
+- Desktop viewport: 1363 × 936 CSS px, density 1.
+- Horizontal overflow: none (`scrollWidth` 1348 = `clientWidth` 1348).
+- Episode 03 tab selection: passed (`aria-selected=true`).
+- Updated episode detail content: passed.
+- Five problem/solution rows: passed.
+- Sticky navigation and smooth section navigation: passed.
+- Console: no application-origin warning or error; logged errors are limited to the cloud-browser extension metadata script.
+- Responsive code review: the five-problem strip, episode tabs, three-part episode flow and solution rows all collapse to single-column layouts at 820px/540px without page-level horizontal overflow rules being introduced.
+
+### Follow-up polish
+
+- P3: capture a physical 390px mobile viewport in a future device-enabled browser session; the current cloud browser exposes only the desktop viewport. Responsive CSS has been reviewed but not visually captured in this iteration.
+
+final result: passed
+
+---
+
 ## Iteration 6 — 转化漏斗层级示意重构
 
 ### Evidence
@@ -380,59 +497,6 @@ The focused comparison confirms that all five funnel segments share the same hor
 - Leave and re-enter animation replay: sector count changed from 0 to 5, passed.
 - Horizontal overflow at 1363px CSS viewport: none.
 - Console: no application-origin warning or error.
-
-### Follow-up polish
-
-- No P3 follow-up is required for the requested scope.
-
-final result: passed
-
----
-
-## Iteration 9 — 转化步骤卡片压缩
-
-### Evidence
-
-- Source visual truth: `/workspace/scratch/da26ccb1977f/upload/f5a8b2a4-fb51-438c-b427-c78a44d34188.png`
-- Browser-rendered implementation screenshot: `cloud-browser://active-tab/conversion/compact-steps-v9`
-- Side-by-side focused comparison: `cloud-browser://qa/compact-steps-v9-comparison`
-- Source pixels: 1060 × 209; browser screenshot pixels: 1348 × 926.
-- CSS viewport: 1363 × 936; document client width: 1348; device density: 1.
-- State: conversion section, step 07 “查看阵营排名” selected.
-
-### Full-view and focused-region comparison evidence
-
-The supplied annotated screenshot and the final browser capture were normalized into one 1416 × 190 side-by-side comparison. The final implementation preserves all nine conversion steps and the selected-state treatment while reducing the card strip to a compact two-line information unit: number on the first line and label on the second.
-
-The focused comparison confirms that the card strip no longer contains a large unused vertical area. The current-step explanation below remains intact and visually separate.
-
-### Findings and comparison history
-
-#### Pass 1 — passed
-
-- No actionable P0, P1 or P2 mismatch remains.
-- All nine cards render at a consistent 76px height.
-- Each card uses exactly two visual rows with centered vertical alignment and a restrained 9px row gap.
-- Every Chinese step label remains fully visible at the verified desktop viewport; no ellipsis is triggered.
-- The active card, hover state and click-driven current-step explanation remain functional.
-
-### Required fidelity surfaces
-
-- Fonts and typography: passed. Step numbers use a compact 10px line; labels use a readable 12px line with consistent dark-blue hierarchy.
-- Spacing and layout rhythm: passed. The strip height is reduced without changing the nine-column desktop rhythm or the explanatory panel below.
-- Colors and visual tokens: passed. Existing ice-blue inactive states, white late-stage states, cobalt active state and gold current-step tag are preserved.
-- Image quality and asset fidelity: passed. The component remains code-native HTML/CSS with no rasterized UI, watermark, fake logo, emoji or placeholder asset.
-- Copy and content: passed. All nine original step labels remain unchanged and fully readable.
-- Accessibility and interaction: passed. Cards remain semantic buttons; active selection is communicated by both color and the duplicated current-step text below.
-
-### Browser verification
-
-- Nine visible step cards: passed.
-- Card heights: nine of nine at 76px, passed.
-- Truncated labels: zero, passed.
-- Step 07 click selection: passed.
-- Horizontal overflow at 1363px CSS viewport: none.
-- Console: no application-origin warnings or errors.
 
 ### Follow-up polish
 
