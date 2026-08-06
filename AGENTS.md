@@ -13,3 +13,5 @@ Build app UI in `src/`. Keep `.openai/hosting.json`, `worker/index.js`, `scripts
 - Source of truth: `/workspace/scratch/da26ccb1977f/generated_images/exec-fe56317f-7985-4e06-af26-7b15667a1388.png`.
 - User preference: bright, cheerful ice-and-snow event visual; sky blue, snow white, a small warm-yellow reward accent; friendly 3D winter environment, bold rounded Chinese headline and restrained ice edging.
 - Avoid returning to dark cinematic proposal styling. Keep the full site suitable for classroom presentation and internal marketing review rather than a public game download page.
+- For the effect-metrics conversion model, prioritize a polished stepped funnel silhouette over mathematically proportional widths. Use a small number of visually balanced, center-aligned stages, keep all original model values in the accompanying text, and use the earlier light ice-blue card / white chart treatment instead of a dark panel or staggered funnel.
+- Keep the nine-step conversion-path buttons compact: exactly two visual rows (step number, then step name) with minimal vertical padding and no large empty area.
