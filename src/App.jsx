@@ -21,8 +21,11 @@ import {
   Image,
   LinkSimple,
   List,
+  MagnifyingGlass,
   Medal,
   Megaphone,
+  MouseSimple,
+  Repeat,
   Robot,
   ShareNetwork,
   ShieldCheck,
@@ -81,10 +84,18 @@ const cases = [
 ];
 
 const episodes = [
-  { no: "01", title: "冰块保卫战", subtitle: "高温 × 保冰", desc: "在高温环境中运输和保护冰块，最终按剩余重量排名。", gains: ["保温箱", "遮阳布", "冰袋", "任务提示"] },
-  { no: "02", title: "水上运粮战", subtitle: "水道 × 运粮", desc: "穿越浮桥、滑道和障碍区，将粮草安全送到本方城池。", gains: ["水上捷径", "时间加成", "物资保护", "复活机会"] },
-  { no: "03", title: "泼水攻城战", subtitle: "阵营 × 攻防", desc: "用水枪、水球和海绵装备完成城池攻防与资源争夺。", gains: ["高阶水枪", "防守盾牌", "额外复活", "保护时间"] },
-  { no: "04", title: "赏金决赛夜", subtitle: "冲刺 × 瓜分", desc: "线下成绩、游戏内有效助力和直播互动共同决定冠军。", gains: ["赏金箱", "资源兑换", "隐藏任务", "最后冲刺"] },
+  { no: "01", title: "冰块保卫战", subtitle: "高温 × 保冰", desc: "在高温环境中运输、遮阳并保护同等重量的冰块，60分钟后按剩余重量排名。", scene: "冰块实时融化，让领先与落后在镜头中持续变化。", gameTask: "完成首次建设、资源采集和武将招募，为所属主播累计有效助力。", effect: "每达成一档助力人数，现场解锁保温箱、遮阳布、冰袋或路线提示。", gains: ["保温箱", "遮阳布", "冰袋", "任务提示"] },
+  { no: "02", title: "水上运粮战", subtitle: "水道 × 运粮", desc: "队员穿越浮桥、滑道、水池和障碍区，把代表粮草的道具运到本方城池。", scene: "粮草可能掉落、路线可能受阻，阵营之间可以拦截并争夺隐藏捷径。", gameTask: "完成资源采集、火炉升级和同盟任务，把游戏经营行为转化为运粮优势。", effect: "助力积分可兑换水上捷径、额外时间、免罚令牌、物资保护与复活机会。", gains: ["水上捷径", "时间加成", "物资保护", "复活机会"] },
+  { no: "03", title: "泼水攻城战", subtitle: "阵营 × 攻防", desc: "三阵营用水枪、水球和海绵装备攻守城池，争夺旗帜与资源令牌。", scene: "进攻、防守、运输和指挥分工明确，冲突与反转适合直播切片。", gameTask: "玩家通过阵营任务持续贡献积分，决定本阵营攻城物资和战术资源。", effect: "积分可兑换高阶水枪、防守盾牌、额外复活、攻城加时和城池保护时间。", gains: ["高阶水枪", "防守盾牌", "额外复活", "保护时间"] },
+  { no: "04", title: "赏金决赛夜", subtitle: "冲刺 × 瓜分", desc: "前三期成绩、游戏内有效助力与决赛直播互动共同决定最终冠军。", scene: "赏金箱、隐藏任务、阵营资源兑换与最后十分钟冲刺制造终局悬念。", gameTask: "玩家完成最后阶段任务、召回好友并参与直播互动，为主播完成最终冲刺。", effect: "游戏内助力占50%，并可触发主播复活、特殊事件与最终赏金增益。", gains: ["赏金箱", "资源兑换", "隐藏任务", "最后冲刺"] },
+];
+
+const painPoints = [
+  { no: "01", Icon: Eye, problem: "只在直播间外观看预览", why: "用户看到了事件，但没有进入直播间，也没有接触到完整转化口播。", solution: "在直播预览画面、预热视频和官方素材中直接露出完整游戏名、活动利益点与可点击入口。", action: "预览外也能直接进入游戏", result: "减少第一步流失" },
+  { no: "02", Icon: ShareNetwork, problem: "刷到切片，却找不到游戏入口", why: "高光和二创带来兴趣，但传播素材与转化入口彼此分离。", solution: "授权切片、官方视频与效果素材统一挂载小游戏入口，评论区置顶进入方式；热点出现后24小时内补发转化版。", action: "所有切片统一入口", result: "把围观变成点击" },
+  { no: "03", Icon: MagnifyingGlass, problem: "感兴趣，却不知道游戏名或搜索路径", why: "用户记住了主播和挑战，却没有记住产品名称，无法主动搜索。", solution: "封面、前三秒、字幕与口播统一露出《三国：冰河时代》，固定搜索口令“搜索三国冰河时代，进入冰河赏金营”。", action: "统一游戏名与搜索口令", result: "承接非点击用户" },
+  { no: "04", Icon: MouseSimple, problem: "进入游戏后看不到活动，不知道做什么", why: "用户落在普通首页，任务入口深、操作目标和奖励不明确。", solution: "外部入口直达活动专题页，首屏选择主播阵营；首个助力任务控制在5分钟内，完成后立即发放奖励。", action: "直达活动页与首任务", result: "提升首次任务完成" },
+  { no: "05", Icon: Repeat, problem: "完成第一次体验后，缺少回流理由", why: "首次奖励结束后，没有新的关系反馈、竞争压力或阶段目标。", solution: "用阵营排名、主播求援、赏金变化、连续签到和下一期任务提醒，形成游戏内、主播账号与社群三重召回。", action: "排名＋奖励＋主播召回", result: "推动次日与七日留存" },
 ];
 
 const matrix = {
@@ -220,6 +231,7 @@ function App() {
   const [mobileMenu, setMobileMenu] = useState(false);
   const [matrixTab, setMatrixTab] = useState("短视频");
   const [activeFunnel, setActiveFunnel] = useState(0);
+  const [activeEpisode, setActiveEpisode] = useState(0);
   const [activeModelStage, setActiveModelStage] = useState(0);
   const [activeWeek, setActiveWeek] = useState(0);
   const caseRail = useRef(null);
@@ -330,12 +342,11 @@ function App() {
               <div className="platform-plus">×</div>
               <article className="platform-panel wechat"><div className="platform-icon" aria-label="微信"><SiWechat /></div><div><span>社群沉淀与长期经营</span><h3>微信</h3><p>小游戏经营、同盟社群、好友邀请、连续签到与老玩家召回。</p></div><ul><li>承接主播关系</li><li>形成同盟与阵营任务</li><li>推动次日与长期回流</li></ul></article>
             </div>
-            <div className="breakpoint-row reveal">
-              <article><Eye /><span>只看预览</span><p>用户在直播间外看到内容，却没有进入直播。</p></article>
-              <ArrowRight />
-              <article><ShareNetwork /><span>刷到切片</span><p>用户产生兴趣，但找不到统一游戏入口。</p></article>
-              <ArrowRight />
-              <article><GameController /><span>进入后迷失</span><p>进入普通首页，不知道需要完成什么任务。</p></article>
+            <div className="problem-strip reveal" aria-label="五个核心用户流失问题">
+              <div className="problem-strip-title"><WarningCircle weight="fill" /><span>五个核心流失问题</span><strong>从看见内容到持续回流，每一步都可能断裂</strong></div>
+              <div className="problem-strip-list">
+                {painPoints.map(({ no, problem }) => <span key={no}><b>{no}</b>{problem}</span>)}
+              </div>
             </div>
           </div>
         </section>
@@ -372,14 +383,28 @@ function App() {
 
         <section id="mechanism" className="section section-anchor mechanism-section">
           <div className="page-wrap">
-            <SectionHeader eyebrow="03 真人秀机制" title="四期任务，把暑期视觉变成持续追更" desc="每一期都由线下挑战制造内容，再由游戏内助力改变比赛条件。" />
+            <SectionHeader eyebrow="03 真人秀机制" title="四期任务，让暑期内容持续追更" desc="每一期都由线下挑战制造内容，再由游戏内助力改变比赛条件。" />
             <div className="challenge-image reveal"><img src={`${import.meta.env.BASE_URL}assets/challenge-arena.webp`} alt="冰块保卫、水上运粮、泼水攻城与赏金决赛四个挑战区域的冰雪插画" /></div>
-            <div className="episode-timeline">
-              {episodes.map((ep) => (
-                <article className="episode-card reveal" key={ep.no}>
+            <div className="episode-tabs reveal" role="tablist" aria-label="四期真人秀任务">
+              {episodes.map((ep, index) => <button key={ep.no} role="tab" aria-selected={activeEpisode === index} className={activeEpisode === index ? "active" : ""} onClick={() => setActiveEpisode(index)}><span>第{ep.no}期</span><strong>{ep.title}</strong><small>{ep.subtitle}</small></button>)}
+            </div>
+            <article className="episode-feature reveal" role="tabpanel" aria-live="polite">
+              <div className="episode-feature-heading"><div><span>EP.{episodes[activeEpisode].no}</span><Badge tone="gold">{episodes[activeEpisode].subtitle}</Badge></div><h3>{episodes[activeEpisode].title}</h3><p>{episodes[activeEpisode].desc}</p></div>
+              <div className="episode-detail-grid">
+                <section><div className="episode-detail-icon"><VideoCamera weight="duotone" /></div><span>现场真人秀看点</span><p>{episodes[activeEpisode].scene}</p></section>
+                <ArrowRight className="episode-flow-arrow" />
+                <section><div className="episode-detail-icon"><GameController weight="duotone" /></div><span>玩家在游戏内做什么</span><p>{episodes[activeEpisode].gameTask}</p></section>
+                <ArrowRight className="episode-flow-arrow" />
+                <section className="episode-effect"><div className="episode-detail-icon"><Gift weight="duotone" /></div><span>如何改变主播比赛</span><p>{episodes[activeEpisode].effect}</p></section>
+              </div>
+              <div className="episode-gains"><span>本期可解锁现场增益</span>{episodes[activeEpisode].gains.map((gain) => <small key={gain}><CheckCircle weight="fill" />{gain}</small>)}</div>
+            </article>
+            <div className="episode-loop reveal"><span>每期固定内容循环</span><strong>线下任务制造冲突</strong><ArrowRight /><strong>主播直播号召助力</strong><ArrowRight /><strong>玩家进入游戏完成任务</strong><ArrowRight /><strong>助力改变现场结果</strong></div>
+            <div className="episode-timeline" aria-label="四期任务摘要">
+              {episodes.map((ep, index) => (
+                <button className={activeEpisode === index ? "episode-card active" : "episode-card"} key={ep.no} onClick={() => setActiveEpisode(index)}>
                   <div className="episode-no">第{ep.no}期</div><span className="episode-subtitle">{ep.subtitle}</span><h3>{ep.title}</h3><p>{ep.desc}</p>
-                  <div className="gain-list"><span>玩家助力可解锁</span>{ep.gains.map((gain) => <small key={gain}><CheckCircle weight="fill" />{gain}</small>)}</div>
-                </article>
+                </button>
               ))}
             </div>
             <div className="decision-block reveal">
@@ -410,10 +435,15 @@ function App() {
               {funnelSteps.map((step, index) => <button key={step} className={activeFunnel === index ? "active" : index < activeFunnel ? "passed" : ""} onClick={() => setActiveFunnel(index)}><span>{String(index + 1).padStart(2, "0")}</span><strong>{step}</strong></button>)}
             </div>
             <div className="funnel-note"><Badge tone="gold">当前步骤</Badge><strong>{funnelSteps[activeFunnel]}</strong><span>{activeFunnel < 4 ? "降低进入门槛，确保入口明确且可追踪。" : activeFunnel < 7 ? "用即时奖励和可见贡献强化参与反馈。" : "用排名、主播求援与连续任务形成回流。"}</span></div>
-            <div className="breakpoints reveal">
-              <article><div><WarningCircle weight="fill" /><span>断点一</span></div><h3>只看直播预览</h3><p>直播外素材也配置明确入口、游戏名和行动提示。</p></article>
-              <article><div><WarningCircle weight="fill" /><span>断点二</span></div><h3>切片找不到游戏</h3><p>授权切片、官方视频和效果素材统一配置入口。</p></article>
-              <article><div><WarningCircle weight="fill" /><span>断点三</span></div><h3>进入后不知道做什么</h3><p>直达活动页，5分钟内完成首个任务并领取奖励。</p></article>
+            <div className="solution-heading reveal"><Badge tone="gold">重点模块</Badge><h3>五个用户问题，对应五套解决动作</h3><p>不是笼统地“增加曝光”，而是逐一修复从内容触达到长期回流的关键断点。</p></div>
+            <div className="solution-map reveal">
+              {painPoints.map(({ no, Icon, problem, why, solution, action, result }) => (
+                <article key={no} className="solution-card">
+                  <div className="solution-problem"><span className="solution-no">{no}</span><Icon weight="duotone" /><div><small>用户问题</small><h3>{problem}</h3><p>{why}</p></div></div>
+                  <div className="solution-arrow"><ArrowRight weight="bold" /></div>
+                  <div className="solution-action"><small>解决方法</small><p>{solution}</p><div><span><CheckCircle weight="fill" />{action}</span><b>{result}</b></div></div>
+                </article>
+              ))}
             </div>
             <blockquote className="core-principle reveal"><LinkSimple weight="bold" /><p>每一条流量内容之后，都必须有可点击、可追踪、可承接的游戏入口。</p></blockquote>
           </div>
@@ -503,7 +533,7 @@ function App() {
         </section>
       </main>
 
-      <footer><div className="page-wrap footer-inner"><div><strong>《三国：冰河时代》暑期营销方案</strong><span>“冰河赏金营”暑期真人秀赏金挑战</span></div><div className="footer-meta"><span>版本 V1.0</span><span>更新日期 2026-08-05</span><span>用途：课程作业 / 内部提案</span></div><p>数据说明：公开资料需单独标注引用；本页面数据均为项目规划、活动目标或模型测算，不代表实际业绩或正式报价。</p></div></footer>
+      <footer><div className="page-wrap footer-inner"><div><strong>《三国：冰河时代》暑期营销方案</strong><span>“冰河赏金营”暑期真人秀赏金挑战</span></div><div className="footer-meta"><span>版本 V1.1</span><span>更新日期 2026-08-06</span><span>用途：课程作业 / 内部提案</span></div><p>数据说明：公开资料需单独标注引用；本页面数据均为项目规划、活动目标或模型测算，不代表实际业绩或正式报价。</p></div></footer>
 
       <button className="back-top" onClick={() => goTo("overview")} aria-label="返回顶部"><ArrowUp /></button>
     </div>
