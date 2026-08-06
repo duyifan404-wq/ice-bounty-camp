@@ -147,14 +147,11 @@ const metricGroups = [
 ];
 
 const conversionModel = [
-  { name: "内容曝光 1亿", value: 100000000, fill: "#2d70d6" },
-  { name: "深度观看/互动 800万", value: 8000000, fill: "#4b87dd" },
-  { name: "点击入口 28万", value: 280000, fill: "#62a2e6" },
-  { name: "进入游戏 23.8万", value: 238000, fill: "#76b8eb" },
-  { name: "选择阵营 17.9万", value: 179000, fill: "#72c9dd" },
-  { name: "完成首任务 10.7万", value: 107000, fill: "#72d4cb" },
-  { name: "次日参与 4.3万", value: 43000, fill: "#f2b84b" },
-  { name: "七日参与 2.1万", value: 21000, fill: "#ff9d43" },
+  { no: "01", title: "内容触达", metric: "内容曝光 1亿", detail: "真人秀、直播与切片形成第一轮关注", visualValue: 100, fill: "#6d8ff2" },
+  { no: "02", title: "兴趣激活", metric: "深度观看 / 互动 800万", detail: "冲突、反转与主播关系推动深度观看", visualValue: 82, fill: "#53b7ee" },
+  { no: "03", title: "入口转化", metric: "点击 28万 · 进入游戏 23.8万", detail: "统一入口承接内容热度，减少路径流失", visualValue: 64, fill: "#56cdc9" },
+  { no: "04", title: "游戏承接", metric: "选阵营 17.9万 · 首任务 10.7万", detail: "阵营选择与即时奖励完成首次价值反馈", visualValue: 46, fill: "#f2bc4d" },
+  { no: "05", title: "留存回流", metric: "次日 4.3万 · 七日 2.1万", detail: "榜单、主播求援和连续任务推动回流", visualValue: 30, fill: "#ff8f65" },
 ];
 
 function Badge({ children, tone = "blue" }) {
@@ -175,13 +172,60 @@ function scrollToId(id) {
   document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
 }
 
+function useReplayableChart() {
+  const chartRef = useRef(null);
+  const [chartRun, setChartRun] = useState(0);
+  const [chartVisible, setChartVisible] = useState(false);
+  const [reducedMotion, setReducedMotion] = useState(false);
+
+  useEffect(() => {
+    const mediaQuery = window.matchMedia("(prefers-reduced-motion: reduce)");
+    const syncMotionPreference = () => setReducedMotion(mediaQuery.matches);
+    syncMotionPreference();
+    mediaQuery.addEventListener?.("change", syncMotionPreference);
+
+    if (mediaQuery.matches) {
+      setChartVisible(true);
+      return () => mediaQuery.removeEventListener?.("change", syncMotionPreference);
+    }
+
+    let isActive = false;
+    const observer = new IntersectionObserver(([entry]) => {
+      if (!entry) return;
+      const shouldEnter = entry.isIntersecting && entry.intersectionRatio >= 0.45;
+      const shouldLeave = !entry.isIntersecting || entry.intersectionRatio <= 0.08;
+
+      if (shouldEnter && !isActive) {
+        isActive = true;
+        setChartRun((run) => run + 1);
+        setChartVisible(true);
+      } else if (shouldLeave && isActive) {
+        isActive = false;
+        setChartVisible(false);
+      }
+    }, { threshold: [0, 0.08, 0.45, 1] });
+
+    if (chartRef.current) observer.observe(chartRef.current);
+    return () => {
+      observer.disconnect();
+      mediaQuery.removeEventListener?.("change", syncMotionPreference);
+    };
+  }, []);
+
+  return { chartRef, chartRun, chartVisible, reducedMotion };
+}
+
 function App() {
   const [activeNav, setActiveNav] = useState("overview");
   const [mobileMenu, setMobileMenu] = useState(false);
   const [matrixTab, setMatrixTab] = useState("短视频");
   const [activeFunnel, setActiveFunnel] = useState(0);
+  const [activeModelStage, setActiveModelStage] = useState(0);
   const [activeWeek, setActiveWeek] = useState(0);
   const caseRail = useRef(null);
+  const decisionChart = useReplayableChart();
+  const budgetChart = useReplayableChart();
+  const modelFunnel = useReplayableChart();
 
   const decisionData = useMemo(() => [
     { name: "线下任务成绩", value: 30, color: "#5ba6ea" },
@@ -340,7 +384,7 @@ function App() {
             </div>
             <div className="decision-block reveal">
               <div><Badge>决赛权重 · 项目建议</Badge><h3>游戏内有效助力占比最高</h3><p>让玩家进入游戏成为决定主播胜负的关键，而不是附加环节。</p><div className="decision-legend">{decisionData.map((d) => <span key={d.name}><i style={{ backgroundColor: d.color }} />{d.name} {d.value}%</span>)}</div></div>
-              <div className="chart-box" aria-label="决赛权重环形图"><ResponsiveContainer width="100%" height={260}><PieChart><Pie data={decisionData} dataKey="value" nameKey="name" innerRadius={62} outerRadius={96} paddingAngle={3}>{decisionData.map((d) => <Cell key={d.name} fill={d.color} />)}</Pie><Tooltip formatter={(value, name) => [`${value}%`, name]} /></PieChart></ResponsiveContainer><div className="chart-center"><strong>50%</strong><span>游戏内助力</span></div></div>
+              <div className="chart-box" ref={decisionChart.chartRef} aria-label="决赛权重环形图">{decisionChart.chartVisible && <ResponsiveContainer width="100%" height={260} key={decisionChart.chartRun}><PieChart><Pie data={decisionData} dataKey="value" nameKey="name" innerRadius={62} outerRadius={96} paddingAngle={3} isAnimationActive={!decisionChart.reducedMotion} animationDuration={850} animationEasing="ease-out">{decisionData.map((d) => <Cell key={d.name} fill={d.color} />)}</Pie><Tooltip formatter={(value, name) => [`${value}%`, name]} /></PieChart></ResponsiveContainer>}<div className="chart-center"><strong>决赛权重</strong><span>三项构成</span></div></div>
             </div>
           </div>
         </section>
@@ -411,7 +455,7 @@ function App() {
           <div className="page-wrap">
             <SectionHeader eyebrow="09 预算与风险" title="500万元项目测算版" desc="课程方案预算，不代表实际报价；具体金额需结合主播档期、场地和投放成本调整。" />
             <div className="budget-layout reveal">
-              <div className="budget-chart"><div className="budget-total"><Badge>项目测算</Badge><strong>500<small>万元</small></strong><span>总预算</span></div><ResponsiveContainer width="100%" height={340}><PieChart><Pie data={budgetData} dataKey="value" nameKey="name" innerRadius={86} outerRadius={128} paddingAngle={2}>{budgetData.map((d) => <Cell key={d.name} fill={d.color} />)}</Pie><Tooltip formatter={(value, name) => [`${value}万元`, name]} /></PieChart></ResponsiveContainer></div>
+              <div className="budget-chart" ref={budgetChart.chartRef}><div className="budget-total"><Badge>项目测算</Badge><strong>500<small>万元</small></strong><span>总预算</span></div>{budgetChart.chartVisible && <ResponsiveContainer width="100%" height={340} key={budgetChart.chartRun}><PieChart><Pie data={budgetData} dataKey="value" nameKey="name" innerRadius={86} outerRadius={128} paddingAngle={2} isAnimationActive={!budgetChart.reducedMotion} animationDuration={900} animationEasing="ease-out">{budgetData.map((d) => <Cell key={d.name} fill={d.color} />)}</Pie><Tooltip formatter={(value, name) => [`${value}万元`, name]} /></PieChart></ResponsiveContainer>}</div>
               <div className="budget-list">{budgetData.map((item) => <div key={item.name}><i style={{ backgroundColor: item.color }} /><span>{item.name}</span><strong>{item.value}万元</strong><small>{Math.round(item.value / 5)}%</small></div>)}</div>
             </div>
             <h3 className="risk-title"><ShieldCheck weight="duotone" />关键风险与解决措施</h3>
@@ -424,8 +468,32 @@ function App() {
             <SectionHeader eyebrow="10 效果指标" title="所有数字都标明数据性质" desc="以下均为活动目标或模型测算，不呈现为已经实现的业绩。" />
             <div className="metric-groups">{metricGroups.map(({ title, Icon, items }) => <article className="reveal" key={title}><div className="metric-group-title"><Icon weight="duotone" /><h3>{title}</h3><Badge tone="gold">项目目标值</Badge></div>{items.map(([label, value]) => <div className="metric-line" key={label}><span>{label}</span><strong>{value}</strong></div>)}</article>)}</div>
             <div className="model-block reveal">
-              <div className="model-copy"><Badge>模型测算</Badge><h3>1亿内容曝光的转化漏斗示例</h3><p>用于展示转化逻辑，后续需结合游戏历史投放成本、付费率、客单价和LTV校准。</p><div className="data-notes"><span><i className="dot-blue" />项目测算：资源与机制规划</span><span><i className="dot-gold" />活动目标：希望达到的业务结果</span><span><i className="dot-coral" />模型测算：用于演示转化关系</span></div></div>
-              <div className="funnel-chart" aria-label="一亿内容曝光转化漏斗"><ResponsiveContainer width="100%" height={420}><FunnelChart><Tooltip formatter={(value, name) => [Number(value).toLocaleString("zh-CN"), name]} /><Funnel dataKey="value" data={conversionModel} isAnimationActive><LabelList position="right" fill="#18457f" stroke="none" dataKey="name" /></Funnel></FunnelChart></ResponsiveContainer></div>
+              <div className="model-heading">
+                <div><Badge tone="gold">模型测算</Badge><h3>从内容热度到长期回流</h3></div>
+                <p>将八个测算节点整理为五个转化阶段，强调营销链路的递进关系；具体人数仍完整保留在右侧。</p>
+              </div>
+              <div className="model-visual-grid">
+                <div className="funnel-chart" ref={modelFunnel.chartRef} aria-label="一亿内容曝光转化漏斗">
+                  <span className="funnel-caption">CONVERSION PATH</span>
+                  {modelFunnel.chartVisible && <ResponsiveContainer width="100%" height={400} key={modelFunnel.chartRun}>
+                    <FunnelChart margin={{ top: 18, right: 20, bottom: 18, left: 20 }}>
+                      <Tooltip formatter={(_value, _name, item) => [item.payload.metric, item.payload.title]} cursor={false} />
+                      <Funnel dataKey="visualValue" nameKey="title" data={conversionModel} stroke="#ffffff" strokeWidth={8} isAnimationActive={!modelFunnel.reducedMotion} animationDuration={950} animationEasing="ease-out" onMouseEnter={(_entry, index) => setActiveModelStage(index)}>
+                        {conversionModel.map((stage, index) => <Cell key={stage.title} fill={stage.fill} opacity={activeModelStage === index ? 1 : 0.9} />)}
+                        <LabelList position="center" fill="#ffffff" stroke="none" dataKey="title" />
+                      </Funnel>
+                    </FunnelChart>
+                  </ResponsiveContainer>}
+                </div>
+                <div className="funnel-details" aria-label="转化阶段详情">
+                  {conversionModel.map((stage, index) => (
+                    <button key={stage.title} className={activeModelStage === index ? "active" : ""} style={{ "--stage-color": stage.fill }} onMouseEnter={() => setActiveModelStage(index)} onFocus={() => setActiveModelStage(index)} onClick={() => setActiveModelStage(index)}>
+                      <span>{stage.no}</span><div><strong>{stage.title}</strong><b>{stage.metric}</b><small>{stage.detail}</small></div>
+                    </button>
+                  ))}
+                </div>
+              </div>
+              <p className="funnel-scale-note">图形宽度仅用于表现阶段递进，不代表实际人数比例；模型数值以右侧文字为准。</p>
             </div>
           </div>
         </section>
