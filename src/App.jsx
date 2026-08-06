@@ -23,7 +23,6 @@ import {
   List,
   Medal,
   Megaphone,
-  PlayCircle,
   Robot,
   ShareNetwork,
   ShieldCheck,
@@ -38,6 +37,7 @@ import {
   WarningCircle,
   X,
 } from "@phosphor-icons/react";
+import { SiTiktok, SiWechat } from "react-icons/si";
 import {
   Cell,
   Funnel,
@@ -282,9 +282,9 @@ function App() {
           <div className="page-wrap">
             <SectionHeader eyebrow="02 市场判断" title="内容曝光不等于有效新增" desc="双平台协作，让抖音负责制造热度与即时进入，让微信负责关系沉淀与长期回流。" />
             <div className="platform-compare reveal">
-              <article className="platform-panel douyin"><div className="platform-icon"><PlayCircle weight="fill" /></div><div><span>传播与即时转化</span><h3>抖音</h3><p>短视频预热、主播直播、真人秀切片、二创扩散与效果投放。</p></div><ul><li>先制造内容事件</li><li>再用明确行动指令承接</li><li>热门素材24小时内补转化版</li></ul></article>
+              <article className="platform-panel douyin"><div className="platform-icon" aria-label="抖音"><SiTiktok /></div><div><span>传播与即时转化</span><h3>抖音</h3><p>短视频预热、主播直播、真人秀切片、二创扩散与效果投放。</p></div><ul><li>先制造内容事件</li><li>再用明确行动指令承接</li><li>热门素材24小时内补转化版</li></ul></article>
               <div className="platform-plus">×</div>
-              <article className="platform-panel wechat"><div className="platform-icon"><UsersThree weight="fill" /></div><div><span>社群沉淀与长期经营</span><h3>微信</h3><p>小游戏经营、同盟社群、好友邀请、连续签到与老玩家召回。</p></div><ul><li>承接主播关系</li><li>形成同盟与阵营任务</li><li>推动次日与长期回流</li></ul></article>
+              <article className="platform-panel wechat"><div className="platform-icon" aria-label="微信"><SiWechat /></div><div><span>社群沉淀与长期经营</span><h3>微信</h3><p>小游戏经营、同盟社群、好友邀请、连续签到与老玩家召回。</p></div><ul><li>承接主播关系</li><li>形成同盟与阵营任务</li><li>推动次日与长期回流</li></ul></article>
             </div>
             <div className="breakpoint-row reveal">
               <article><Eye /><span>只看预览</span><p>用户在直播间外看到内容，却没有进入直播。</p></article>
@@ -305,7 +305,7 @@ function App() {
             <div className="case-rail" ref={caseRail}>
               {cases.map((item, index) => (
                 <article className="case-card reveal" key={item.title}>
-                  <div className="case-top"><span>{String(index + 1).padStart(2, "0")}</span><Badge tone={index % 3 === 2 ? "gold" : "blue"}>{item.type}</Badge></div>
+                  <div className="case-top"><span className="case-index">{String(index + 1).padStart(2, "0")}</span><span className="case-type">{item.type}</span></div>
                   <h3>{item.title}</h3>
                   <dl><dt>可借鉴机制</dt><dd>{item.borrow}</dd><dt>应用到本项目</dt><dd>{item.apply}</dd></dl>
                 </article>

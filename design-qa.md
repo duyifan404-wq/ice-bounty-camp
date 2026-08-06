@@ -78,3 +78,55 @@ The source mock does not define the lower-page modules. Those modules were check
 - [x] P0/P1/P2 issues cleared.
 
 final result: passed
+
+---
+
+## Iteration 3 — 品牌图标与案例标题强化
+
+### Evidence
+
+- Source visual truth (platform annotation): `/workspace/scratch/da26ccb1977f/upload/bc04e459-2e18-467b-9e38-4738ead97a87.png`
+- Source visual truth (case-title annotation): `/workspace/scratch/da26ccb1977f/upload/3344ea68-c430-409c-9190-d41f8501961e.png`
+- Browser-rendered platform comparison: cloud-browser `/tmp/qa-platform-pair2.jpg`
+- Browser-rendered case-title comparison: cloud-browser `/tmp/qa-case-pair2.jpg`
+- Source pixels: 2048 × 1024 and 2048 × 878; focused comparisons normalized to 700px width per side.
+- Implementation pixels: 1363 × 936 viewport capture; CSS viewport 1363 × 936; device density 1.
+- State: market-judgment platform cards and case-reference rail, desktop route, default theme.
+
+### Full-view and focused-region comparison evidence
+
+The two annotated screenshots and their matching browser-rendered sections were combined into side-by-side comparison images. The platform comparison confirms the placeholder play/group marks are replaced by the recognizable Douyin/TikTok and WeChat brand glyphs from a maintained icon library. The case comparison confirms the low-contrast pale badges are replaced by a continuous dark-blue heading band, warm-gold divider, large numeric index and high-contrast white/gold category labels.
+
+No full-page comparison was required for this localized iteration because the user marked two focused regions and no surrounding layout was changed. The implementation retains the section spacing, card widths and horizontal rail behavior outside those regions.
+
+### Findings and comparison history
+
+#### Pass 1 — passed
+
+- No actionable P0, P1 or P2 mismatch remained after the requested changes.
+- Platform brand assets are crisp SVG glyphs from `react-icons/si`; no handwritten SVG, emoji or fake logo is used.
+- Case titles remain readable at the verified viewport without clipping or truncation.
+- The case rail right-arrow interaction moved `scrollLeft` from 2px to 330px, confirming the redesign did not block horizontal browsing.
+
+### Required fidelity surfaces
+
+- Fonts and typography: passed. Case-category labels use 950 weight against high-contrast surfaces; card titles use 24px/1.3 and retain readable Chinese wrapping.
+- Spacing and layout rhythm: passed. The 86px header band provides consistent alignment across cards; the cards retain even gutter and rail rhythm.
+- Colors and visual tokens: passed. Existing ice-blue proposal tokens remain intact, while the dark-blue/gold title treatment adds hierarchy without introducing a new visual system.
+- Image quality and asset fidelity: passed. Brand marks are vector icons from Simple Icons through `react-icons`; no approximate CSS or text-symbol asset is used.
+- Copy and content: passed. All platform and case labels are unchanged; only hierarchy and icon fidelity changed.
+- Responsiveness: passed by regression. Existing mobile capture and overflow checks remain valid because the modified icons are bounded to 30–32px and the case labels use a constrained maximum width.
+
+### Browser verification
+
+- Real Douyin/TikTok and WeChat SVG glyphs rendered: passed.
+- Case heading band and category badges rendered with expected computed colors: passed.
+- Case rail arrow interaction: passed.
+- Page horizontal overflow at 1363px viewport: none.
+- Console: no application-origin warning or error; only cloud-browser extension metadata messages were present.
+
+### Follow-up polish
+
+- No P3 follow-up is required for the requested scope.
+
+final result: passed
